@@ -9,14 +9,14 @@ const app = express();
 app.use(bodyParser.json({ limit: '10mb' }));
 app.use(cors());
 const PORT = process.env.PORT || 8000;
-mongoose.connect("mongodb+srv://afterlife:mypass@cluster0.jnyqyp8.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0").then(() => {
+mongoose.connect(process.env.MONGO_URL).then(() => {
   app.listen(PORT , () => {
     console.log('Connected');
   })
 })
 // Initialize Google AI
 
-const genAI = new GoogleGenerativeAI('AIzaSyAegrp-N6FhUhthYxCZSfsHYpMwaJGHSGM');
+const genAI = new GoogleGenerativeAI(process.env.GOOGLE_API_KEY);
 const model = genAI.getGenerativeModel({
   model: "gemini-1.5-flash",
   systemInstruction: "you are a mental health professional and your name is untangled thoughts, you are provided with the user's current facial emotion and you want to help them feel better, dont use emojis",
